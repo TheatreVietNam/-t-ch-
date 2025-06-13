@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đặt vé sân khấu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="octagon">
+    <div class="stage">SÂN KHẤU</div>
+    <div class="audience">
+      <div class="side left"></div>
+      <div class="side right"></div>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <h3>Thông tin đặt vé</h3>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="text" id="fullname" placeholder="Họ và tên" />
+    <input type="text" id="phone" placeholder="Số điện thoại" />
+    <input type="text" id="selectedSeats" placeholder="Số ghế đã chọn" readonly />
+    <input type="text" id="total" placeholder="Tổng tiền (VNĐ)" readonly />
+    <button onclick="confirmBooking()">Xác nhận đặt chỗ</button>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
