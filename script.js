@@ -77,6 +77,43 @@ function confirmBooking() {
   loadBookedSeats();
 }
 
+function cancelBooking() {
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+
+  if (!email || !phone) {
+    alert('Vui lòng nhập đúng Email và Số điện thoại để hủy.');
+    return;
+  }
+
+  db.ref('bookedSeats').once('value', snapshot => {
+    const booked = snapshot.val() || {};
+    let seatsToCancel = [];
+
+    for (let seatId in booked) {
+      const booking = booked[seatId];
+      if (booking.email === email && booking.phone === phone) {
+        seatsToCancel.push(seatId);
+      }
+    }
+
+    if (seatsToCancel.length === 0) {
+      alert('Không tìm thấy ghế đã đặt với thông tin này.');
+      return;
+    }
+
+    // Xóa ghế trong Firebase
+    seatsToCancel.forEach(seatId => {
+      db.ref('bookedSeats/' + seatId).remove();
+    });
+
+    alert('Đã hủy các ghế: ' + seatsToCancel.join(', '));
+    selected = [];
+    updateForm();
+    loadBookedSeats();
+  });
+}
+
 function loadBookedSeats() {
   db.ref('bookedSeats').once('value', snapshot => {
     const booked = snapshot.val() || {};
@@ -85,6 +122,8 @@ function loadBookedSeats() {
       if (booked[id]) {
         seat.classList.add('booked');
         seat.classList.remove('selected');
+      } else {
+        seat.classList.remove('booked');
       }
     });
   });
