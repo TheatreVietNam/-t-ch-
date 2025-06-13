@@ -3,6 +3,7 @@ const rightLabels = ['F','G','H','I','J'];
 const leftSide = document.querySelector('.side.left');
 const rightSide = document.querySelector('.side.right');
 let selected = [];
+let bookedData = {};
 
 function createSeats(side, labels) {
   for (let i = 0; i < 5; i++) {
@@ -17,14 +18,38 @@ function createSeats(side, labels) {
       seat.dataset.id = seatId;
 
       seat.addEventListener('click', () => {
-        if (seat.classList.contains('booked')) return;
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
 
+        if (!email || !phone) {
+          alert('Vui lòng nhập Email và Số điện thoại trước khi chọn hoặc hủy ghế.');
+          return;
+        }
+
+        const id = seat.dataset.id;
+        const booked = bookedData[id];
+
+        // Nếu ghế đã được đặt
+        if (seat.classList.contains('booked')) {
+          // Nếu người đặt là chính mình → cho hủy
+          if (booked && booked.email === email && booked.phone === phone) {
+            db.ref('bookedSeats/' + id).remove();
+            seat.classList.remove('booked');
+            alert(`Đã hủy ghế ${id}`);
+            loadBookedSeats();
+          } else {
+            alert('Ghế này đã được người khác đặt và bạn không thể hủy.');
+          }
+          return;
+        }
+
+        // Nếu ghế đang được chọn → bỏ chọn
         if (seat.classList.contains('selected')) {
           seat.classList.remove('selected');
-          selected = selected.filter(s => s !== seatId);
+          selected = selected.filter(s => s !== id);
         } else {
           seat.classList.add('selected');
-          selected.push(seatId);
+          selected.push(id);
         }
         updateForm();
       });
@@ -77,49 +102,13 @@ function confirmBooking() {
   loadBookedSeats();
 }
 
-function cancelBooking() {
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-
-  if (!email || !phone) {
-    alert('Vui lòng nhập đúng Email và Số điện thoại để hủy.');
-    return;
-  }
-
-  db.ref('bookedSeats').once('value', snapshot => {
-    const booked = snapshot.val() || {};
-    let seatsToCancel = [];
-
-    for (let seatId in booked) {
-      const booking = booked[seatId];
-      if (booking.email === email && booking.phone === phone) {
-        seatsToCancel.push(seatId);
-      }
-    }
-
-    if (seatsToCancel.length === 0) {
-      alert('Không tìm thấy ghế đã đặt với thông tin này.');
-      return;
-    }
-
-    // Xóa ghế trong Firebase
-    seatsToCancel.forEach(seatId => {
-      db.ref('bookedSeats/' + seatId).remove();
-    });
-
-    alert('Đã hủy các ghế: ' + seatsToCancel.join(', '));
-    selected = [];
-    updateForm();
-    loadBookedSeats();
-  });
-}
-
 function loadBookedSeats() {
   db.ref('bookedSeats').once('value', snapshot => {
-    const booked = snapshot.val() || {};
+    bookedData = snapshot.val() || {};
+
     document.querySelectorAll('.seat').forEach(seat => {
       const id = seat.dataset.id;
-      if (booked[id]) {
+      if (bookedData[id]) {
         seat.classList.add('booked');
         seat.classList.remove('selected');
       } else {
