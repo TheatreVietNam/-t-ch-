@@ -66,7 +66,7 @@ function updateForm() {
   selected.forEach(seat => {
     let row = seat[0];
     if (['A', 'B', 'F', 'G'].includes(row)) {
-      total += 350000;
+      total += 380000;
     } else {
       total += 320000;
     }
