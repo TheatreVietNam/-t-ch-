@@ -11,7 +11,7 @@ body {
   padding: 30px;
   border-radius: 10px;
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
@@ -33,6 +33,7 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button:hover {
@@ -49,10 +50,24 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  font-size: 0.95rem;
 }
 
 th, td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ccc;
+}
+
+td button {
+  padding: 6px 10px;
+  background: #E53935;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+td button:hover {
+  background: #C62828;
 }
