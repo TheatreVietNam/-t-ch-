@@ -23,12 +23,14 @@
     <input type="text" id="selectedSeats" placeholder="Số ghế đã chọn" readonly />
     <input type="text" id="total" placeholder="Tổng tiền (VNĐ)" readonly />
     <button onclick="confirmBooking()">Xác nhận đặt chỗ</button>
+    <button onclick="cancelBooking()" style="background:#E53935; margin-top:10px;">Hủy đặt chỗ</button>
   </div>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
+  <!-- Config và script -->
   <script src="firebase-config.js"></script>
   <script src="script.js"></script>
 </body>
