@@ -17,13 +17,13 @@ function loadBookings() {
   const tableBody = document.querySelector("#bookingTable tbody");
   tableBody.innerHTML = "";
 
-  firebase.database().ref("bookedSeats").once("value", snapshot => {
+  db.ref("bookedSeats").once("value", snapshot => {
     const data = snapshot.val() || {};
     const records = {};
 
     for (let seatId in data) {
       const booking = data[seatId];
-      const key = `${booking.email}-${booking.phone}`; // gom chung lại theo người đặt
+      const key = `${booking.email}-${booking.phone}`;
 
       if (!records[key]) {
         records[key] = {
@@ -46,8 +46,28 @@ function loadBookings() {
         <td>${b.phone}</td>
         <td>${b.seats.sort().join(", ")}</td>
         <td>${new Date(b.timestamp).toLocaleString("vi-VN")}</td>
+        <td>
+          <button onclick="deleteBooking('${b.email}', '${b.phone}')">Xóa</button>
+        </td>
       `;
       tableBody.appendChild(tr);
     });
+  });
+}
+
+function deleteBooking(email, phone) {
+  const confirmDelete = confirm(`Bạn có chắc muốn xóa tất cả các ghế đã đặt bởi:\n${email} - ${phone}?`);
+  if (!confirmDelete) return;
+
+  db.ref("bookedSeats").once("value", snapshot => {
+    const data = snapshot.val() || {};
+    for (let seatId in data) {
+      const booking = data[seatId];
+      if (booking.email === email && booking.phone === phone) {
+        db.ref("bookedSeats/" + seatId).remove();
+      }
+    }
+    alert("Đã xóa vé thành công.");
+    loadBookings();
   });
 }
