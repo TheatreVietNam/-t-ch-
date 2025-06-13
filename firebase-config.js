@@ -1,4 +1,3 @@
-// Cấu hình Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCBw-FyGPczORqZ_ZN-LboysmAxnsbhzmY",
   authDomain: "the-dec0a.firebaseapp.com",
