@@ -9,20 +9,16 @@ body {
   padding-top: 40px;
 }
 
-.octagon {
+.circle {
   width: 800px;
   height: 800px;
-  background: #4CAF50;
-  clip-path: polygon(
-    30% 0%, 70% 0%, 
-    100% 30%, 100% 70%, 
-    70% 100%, 30% 100%, 
-    0% 70%, 0% 30%
-  );
+  background: #b2dfdb; /* xanh nước nhạt */
+  border-radius: 50%;
   display: flex;
   flex-direction: column;
   color: white;
   user-select: none;
+  overflow: hidden;
 }
 
 .stage {
@@ -32,13 +28,13 @@ body {
   align-items: center;
   font-size: 3rem;
   border-bottom: 3px solid white;
-  background: #388E3C;
+  background: #4dd0e1; /* xanh nước nhạt */
 }
 
 .audience {
   flex: 2;
   display: flex;
-  background: #2E7D32;
+  background: #26a69a;
   padding: 15px 30px;
   gap: 30px;
   box-sizing: border-box;
@@ -115,6 +111,7 @@ body {
 .form-container button:hover {
   background: #388E3C;
 }
+
 @media (max-width: 768px) {
   body {
     flex-direction: column;
@@ -122,7 +119,7 @@ body {
     padding: 20px;
   }
 
-  .octagon {
+  .circle {
     width: 95vw;
     height: 95vw;
   }
