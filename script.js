@@ -1,5 +1,5 @@
-const leftLabels = ['A','B','C','D','E'];
-const rightLabels = ['F','G','H','I','J'];
+const leftLabels = ['A','B','C','D','E','F','G','H'];
+const rightLabels = ['I','J','K','L','M','N','O','P'];
 const leftSide = document.querySelector('.side.left');
 const rightSide = document.querySelector('.side.right');
 let selected = [];
