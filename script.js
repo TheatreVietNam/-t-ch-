@@ -6,7 +6,7 @@ let selected = [];
 let bookedData = {};
 
 function createSeats(side, labels) {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < labels.length; i++) {
     const rowDiv = document.createElement('div');
     rowDiv.classList.add('row');
 
@@ -29,9 +29,7 @@ function createSeats(side, labels) {
         const id = seat.dataset.id;
         const booked = bookedData[id];
 
-        // Nếu ghế đã được đặt
         if (seat.classList.contains('booked')) {
-          // Nếu người đặt là chính mình → cho hủy
           if (booked && booked.email === email && booked.phone === phone) {
             db.ref('bookedSeats/' + id).remove();
             seat.classList.remove('booked');
@@ -43,7 +41,6 @@ function createSeats(side, labels) {
           return;
         }
 
-        // Nếu ghế đang được chọn → bỏ chọn
         if (seat.classList.contains('selected')) {
           seat.classList.remove('selected');
           selected = selected.filter(s => s !== id);
@@ -66,9 +63,9 @@ function updateForm() {
   selected.forEach(seat => {
     let row = seat[0];
     if (['A', 'B', 'F', 'G'].includes(row)) {
-      total += 380000;
+      total += 300000;
     } else {
-      total += 320000;
+      total += 300000;
     }
   });
   document.getElementById('total').value = total.toLocaleString();
