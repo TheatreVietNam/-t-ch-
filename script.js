@@ -93,10 +93,19 @@ function confirmBooking() {
     db.ref('bookedSeats/' + seatId).set(bookingData);
   });
 
-  alert('Đặt chỗ thành công!');
-  selected = [];
-  updateForm();
-  loadBookedSeats();
+alert('Đặt chỗ thành công!');
+
+alert(
+  'Quý Khách Vui Lòng Thanh Toán Phí Đặt Chỗ Để Chúng Tôi Gửi Mail xác nhận đặt chỗ:\\n' +
+  'STK: 213468789\\n' +
+  'Tên TK: NGUYEN QUOC DUY\\n' +
+  'Ngân Hàng Thụ Hưởng: ACB'
+);
+
+selected = [];
+updateForm();
+loadBookedSeats();
+
 }
 
 function loadBookedSeats() {
